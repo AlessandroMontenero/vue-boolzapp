@@ -63,6 +63,8 @@
               placeholder="Cerca o inizia una nuova chat"
               aria-label="Example text with button addon"
               aria-describedby="button-addon1"
+              v-model="search"
+              @keyup="searchOnString()"
             />
           </div>
           <!-- Chats -->

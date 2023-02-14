@@ -8,6 +8,7 @@ let DateTime = luxon.DateTime;
       return {
         activeIndex: 0,
         newText: '',
+        search: '',
         contacts: [
           {
           name: 'Michele',
@@ -205,5 +206,18 @@ let DateTime = luxon.DateTime;
         
         return time
       },
+      searchOnString(){
+        for (index in this.contacts){
+            let typed = this.search.toUpperCase()
+            let userName = this.contacts[index].name.toUpperCase()
+            if (userName.includes(typed)){
+              this.contacts[index].visible = true
+            }
+            else {
+              this.contacts[index].visible = false
+            }
+        
+        }
+      }
     }
   }).mount('#app')
