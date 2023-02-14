@@ -218,6 +218,9 @@ let DateTime = luxon.DateTime;
             }
         
         }
+      },
+      deleteThisMessage(index){
+        let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)
       }
     }
   }).mount('#app')

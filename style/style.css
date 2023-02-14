@@ -158,12 +158,12 @@ i {
     justify-content: space-between;
     border-radius: 10px;
     margin: 0px 10px 5px 10px;
+    position: relative;
 }
 
 .message.sent {
     margin-left: auto;
-    background-color: rgb(210, 250, 180)
-    ;
+    background-color: rgb(210, 250, 180);
 }
 
 .message.received {
@@ -172,6 +172,22 @@ i {
 
 .message .hour {
     align-self: flex-end;
+}
+
+.message .hover {
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(1px);
+    border-radius: 10px;
+    text-align: end;
+    
+}
+.message:hover .hover {
+    display: block;
+    font-size: 0.8rem;
 }
 
 .current-chat .text {

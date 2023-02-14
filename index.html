@@ -117,13 +117,32 @@
             <div
               class="message"
               :class="{ sent: (message.status == 'sent') }"
-              v-for="message in contacts[activeIndex].messages"
+              v-for="(message, index) in contacts[activeIndex].messages"
             >
               <div class="text">
                 <h4>{{message.text}}</h4>
               </div>
               <div class="hour">
                 <h5>{{formatTime(message.date)}}</h5>
+                <div class="hover">
+                    <a
+                      class="nav-link dropdown"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Message info</a></li>
+                      <li>
+                        <a class="dropdown-item" href="#"
+                        @click="deleteThisMessage(index)">Delete message</a>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
               </div>
             </div>
           </div>
