@@ -124,17 +124,18 @@
             </div>
           </div>
           <div class="current-chat">
+            <div v-if="contacts[activeIndex].messages != ''">
             <div
-              class="message"
-              :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}"
-              v-for="(message, index) in contacts[activeIndex].messages"
+            class="message"
+            :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}, { noMessages: (message.status == 'noMessages')}"
+            v-for="(message, index) in contacts[activeIndex].messages"
             >
               <div class="text">
                 <h4>{{message.text}}</h4>
               </div>
-              <div class="hour">
+              <div class="hour" v-if="message.status != 'noMessages'">
                 <h5>{{formatTime(message.date)}}</h5>
-                <div class="hover">
+                <div class="hover" >
                     <a
                       class="nav-link dropdown"
                       href="#"
@@ -155,6 +156,7 @@
                 </div>
               </div>
             </div>
+          </div>
           </div>
           <div class="current-chat-footer">
             <i class="fa-regular fa-face-smile"></i>

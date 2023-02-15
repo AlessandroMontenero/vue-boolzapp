@@ -232,6 +232,17 @@ i {
     z-index: 0;
   }
 
+  .message.noMessages {
+    margin: auto;
+    margin-bottom: 1rem;
+    width: 20%;
+    text-align: center;
+    opacity: 0.6;
+  }
+  .message.noMessages .text {
+    width: 100%;
+  }
+
 .message .hour {
     align-self: flex-end;
     z-index: 1;

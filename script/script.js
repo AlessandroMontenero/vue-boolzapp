@@ -188,23 +188,32 @@ let DateTime = luxon.DateTime;
       },
       submitMessage(index){
         if (!this.newText.replace(/\s/g, '').length == false){
-        let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
-        let thisContact = this.contacts[index]
-        let newMessage = {
-          date: now,
-          text: this.newText,
-          status: 'sent'
-        }
-        let reply = {
-          date: now,
-          text: 'ok',
-          status: 'received'
-        }
-        thisContact.messages.push(newMessage)
-        this.newText = ''
-        setTimeout(function(){
-          thisContact.messages.push(reply)
-        }, 1000)
+          let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
+          let thisContact = this.contacts[index]
+          if (this.contacts[this.activeIndex].messages[0].status == 'noMessages'){
+            this.contacts[this.activeIndex].messages = [{
+              date: now,
+              text: this.newText,
+              status: 'sent'
+            }]
+          }
+          else{
+            let newMessage = {
+            date: now,
+            text: this.newText,
+            status: 'sent'
+          }
+            thisContact.messages.push(newMessage)
+          }
+          this.newText = ''
+          let reply = {
+            date: now,
+            text: 'ok',
+            status: 'received'
+          }
+          setTimeout(function(){
+            thisContact.messages.push(reply)
+          }, 1000)
       }
       },
       formatTime(dateTime){
@@ -226,7 +235,20 @@ let DateTime = luxon.DateTime;
         }
       },
       deleteThisMessage(index){
-        let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)[index]
+        if (this.contacts[this.activeIndex].messages.length == 1) {
+          this.contacts[this.activeIndex].messages = [
+            {
+              
+                date: '',
+                text: 'Inizia a chattare',
+                status: 'noMessages'
+                
+            }
+          ]
+        }
+        else {
+          let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)[index]
+        }
       },
       onResize() {
         if (this.homeDisplay == true) {
