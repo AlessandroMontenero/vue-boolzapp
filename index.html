@@ -138,6 +138,12 @@
             <button type="button" class="btn btn-primary" @click="addUser()">
               Aggiungi Contatto
             </button>
+            <div
+              class="btn"
+              @click="addContactDisplay = false, chatsListDisplay = true"
+            >
+              Back
+            </div>
           </div>
         </div>
         <div class="home" v-show="homeDisplay">

@@ -248,7 +248,14 @@ let DateTime = luxon.DateTime;
         if (window.innerWidth <= 768){
           this.homeDisplay = false
           this.activeChatDisplay = false
-          this.chatsListDisplay = false
+          this.chatsListDisplay = true
+        }
+      },
+      addUserBackButton(){
+        this.addContactDisplay = false
+        this.chatsListDisplay = true
+        if (window.innerWidth > 768) {
+          this.activeChatDisplay = true
         }
       },
       addUser() {
@@ -274,6 +281,7 @@ let DateTime = luxon.DateTime;
             this.addContactDisplay = false
             this.activeChatDisplay = true
             this.activeIndex = arrLenght - 1
+            this.sampleName = ''
         }
 
       },
