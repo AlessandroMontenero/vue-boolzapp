@@ -1,5 +1,6 @@
 
 const { createApp } = Vue
+
 let DateTime = luxon.DateTime;
 
 
@@ -9,6 +10,8 @@ let DateTime = luxon.DateTime;
         activeIndex: 0,
         newText: '',
         search: '',
+        chatsListDisplay: true,
+        activeChatDisplay: true,
         contacts: [
           {
           name: 'Michele',
@@ -220,7 +223,40 @@ let DateTime = luxon.DateTime;
         }
       },
       deleteThisMessage(index){
-        let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)
+        let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)[index]
+      },
+      onResize() {
+        if (window.innerWidth <= 768 && this.activeChatDisplay == true) {
+          this.activeChatDisplay = false
+          this.chatsListDisplay = true
+        } else if (window.innerWidth > 768) {
+          this.activeChatDisplay = true
+          this.chatsListDisplay = true
+        }
+      },
+      contactOnClick() {
+        if (window.innerWidth <= 768) {
+          this.activeChatDisplay = true
+          this.chatsListDisplay = false
       }
+      },
+      activeChatBackButton() {
+        if (window.innerWidth <= 768) {
+          this.activeChatDisplay = false
+          this.chatsListDisplay = true
+      }
+      }
+    },
+    created() {
+      window.addEventListener('resize', this.onResize)
+      if (window.innerWidth <= 768) {
+        this.activeChatDisplay = false
+        this.chatsListDisplay = true
     }
+    },
+    
+    beforeDestroy() {
+      window.removeEventListener('resize', this.onResize)
+    },
+    
   }).mount('#app')
