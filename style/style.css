@@ -47,7 +47,7 @@ i {
 
 .bolzapp-container {
     position: absolute;
-    height: 90vh;
+    height: 80vh;
     width: 80%;
     min-width: 768px;
     background-color: rgb(230, 230, 230);
@@ -216,6 +216,8 @@ i {
     justify-content: center;
     background-color: rgb(240, 242, 245);
     text-align: center;
+    border-radius: 0 10px 10px 0 ;
+
 }
 .home h2 {
     opacity: 0.7;

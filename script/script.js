@@ -336,21 +336,22 @@ let DateTime = luxon.DateTime;
             this.activeChatDisplay = false
             this.chatsListDisplay = true
           }
-          else {
-            this.homeDisplay = false
-            this.activeChatDisplay = true
-            this.chatsListDisplay = false
-          }
-          if (this.homeDisplay == false) {
-            this.chatsListDisplay = true
-            this.activeChatDisplay = true
-          }
-          if (this.addContactDisplay == true) {
+          else if (this.addContactDisplay == true) {
             this.chatsListDisplay = true
             this.homeDisplay = false
             this.activeChatDisplay = false
           }
+          else if (this.activeChatDisplay == true){
+            this.homeDisplay = false
+            this.activeChatDisplay = true
+            this.chatsListDisplay = false
+          }
+        }
+        if (window.innerWidth > 768){
           this.chatsListDisplay = true
+          if (this.addContactDisplay == false && this.homeDisplay == false){
+            this.activeChatDisplay = true
+          }
         }
         
       },
