@@ -94,6 +94,14 @@
             </div>
           </div>
         </div>
+        <div class="home" v-show="homeDisplay">
+          <img src="./img/Screenshot 2023-02-15 at 16.14.44.png" alt="">
+          <div class="boolzappDescr">
+            <h2>Boolzapp Desktop</h2>
+            <h4>Invia e ricevi messaggi senza tenere il telefono connesso a internet. <br>
+            Usa Boolzapp su un massimo di 4 dispotivi collegati e 1 telefono contemporaneamente.</h4>
+          </div>
+        </div>
         <div class="active-chat" v-show="activeChatDisplay">
           <div class="chat-header active-chat-header">
             <i class="fa-solid fa-chevron-left" @click="activeChatBackButton()"></i>
@@ -118,7 +126,7 @@
           <div class="current-chat">
             <div
               class="message"
-              :class="{ sent: (message.status == 'sent') }"
+              :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}"
               v-for="(message, index) in contacts[activeIndex].messages"
             >
               <div class="text">

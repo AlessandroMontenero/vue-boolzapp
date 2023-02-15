@@ -53,7 +53,7 @@ i {
     background-color: rgb(230, 230, 230);
     border-radius: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border: 1px solid rgb(200, 200, 200);
 }
@@ -103,6 +103,10 @@ i {
     align-items: center;
     text-align: left;
 }
+.header-description h5 { 
+    overflow: hidden;
+}
+
 
 .chats-list{
     overflow: hidden;
@@ -134,12 +138,37 @@ i {
     margin: 10px;
     margin-bottom: auto;
 }
+.home {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(240, 242, 245);
+    text-align: center;
+}
+.home h2 {
+    opacity: 0.7;
+}
+.home h4 {
+    opacity: 0.5;
+}
 
+.home img {
+    width: 50%;
+}
+.boolzappDescr {
+    width: 60%;
+}
 .active-chat {
     width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+.fa-chevron-left {
+    display: none;
 }
 
 .current-chat {
@@ -168,9 +197,40 @@ i {
     background-color: rgb(210, 250, 180);
 }
 
+.message.sent:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid rgb(210, 250, 180);
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgb(210, 250, 180);
+    border-bottom: 10px solid transparent;
+    right: -8px;
+    bottom: 3px;
+}
+
 .message.received {
     margin-right: auto;
 }
+
+.message.received .text {
+    z-index: 1;
+}
+
+.message.received:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid white;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+    left: -8px;
+    bottom: 3px;
+    z-index: 0;
+  }
 
 .message .hour {
     align-self: flex-end;
@@ -182,8 +242,6 @@ i {
     position: absolute;
     top: 0;
     right: 0;
-    backdrop-filter: blur(1px);
-    border-radius: 10px;
     text-align: end;
     
 }
@@ -242,5 +300,8 @@ i {
 
     .fa-ellipsis-vertical {
         display: none;
+    }
+    .fa-chevron-left {
+        display: block;
     }
 }

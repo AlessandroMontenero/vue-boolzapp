@@ -12,6 +12,7 @@ let DateTime = luxon.DateTime;
         search: '',
         chatsListDisplay: true,
         activeChatDisplay: true,
+        homeDisplay: true,
         contacts: [
           {
           name: 'Michele',
@@ -226,17 +227,25 @@ let DateTime = luxon.DateTime;
         let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)[index]
       },
       onResize() {
-        if (window.innerWidth <= 768 && this.activeChatDisplay == true) {
+        if (this.homeDisplay == true) {
           this.activeChatDisplay = false
-          this.chatsListDisplay = true
-        } else if (window.innerWidth > 768) {
+        }
+        if (window.innerWidth <= 768 && (this.activeChatDisplay == true || this.homeDisplay == true)) {
+          this.homeDisplay = false
           this.activeChatDisplay = true
+          this.chatsListDisplay = false
+        } else if (window.innerWidth > 768) {
+          if (this.homeDisplay == false) {
+            this.chatsListDisplay = true
+            this.activeChatDisplay = true
+          }
           this.chatsListDisplay = true
         }
       },
       contactOnClick() {
+        this.activeChatDisplay = true
+        this.homeDisplay = false
         if (window.innerWidth <= 768) {
-          this.activeChatDisplay = true
           this.chatsListDisplay = false
       }
       },
@@ -248,11 +257,12 @@ let DateTime = luxon.DateTime;
       }
     },
     created() {
-      window.addEventListener('resize', this.onResize)
-      if (window.innerWidth <= 768) {
-        this.activeChatDisplay = false
-        this.chatsListDisplay = true
+      this.homeDisplay = true
+      this.activeChatDisplay = false
+      if (window.innerWidth < 768) {
+        this.homeDisplay = false
     }
+      window.addEventListener('resize', this.onResize)
     },
     
     beforeDestroy() {
