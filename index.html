@@ -166,7 +166,8 @@
               aria-label="Example text with two button addons"
               v-model="newText"
             />
-            <i class="fa-solid fa-microphone"></i>
+            <i class="fa-solid fa-microphone" v-if="newText == ''"></i>
+            <i class="fa-solid fa-paper-plane" v-else @click="submitMessage(activeIndex)"></i>
           </div>
         </div>
       </div>

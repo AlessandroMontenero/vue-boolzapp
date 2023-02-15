@@ -187,6 +187,7 @@ let DateTime = luxon.DateTime;
         return this.contacts[index].messages[i - 1]
       },
       submitMessage(index){
+        if (!this.newText.replace(/\s/g, '').length == false){
         let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
         let thisContact = this.contacts[index]
         let newMessage = {
@@ -204,6 +205,7 @@ let DateTime = luxon.DateTime;
         setTimeout(function(){
           thisContact.messages.push(reply)
         }, 1000)
+      }
       },
       formatTime(dateTime){
         time = DateTime.fromFormat(dateTime, "dd/MM/yyyy HH:mm:ss").toLocaleString(DateTime.TIME_SIMPLE);

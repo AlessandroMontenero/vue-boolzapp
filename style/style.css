@@ -234,6 +234,7 @@ i {
 
 .message .hour {
     align-self: flex-end;
+    z-index: 1;
 }
 
 .message .hover {
@@ -243,11 +244,22 @@ i {
     top: 0;
     right: 0;
     text-align: end;
-    
+    background-color: rgb(210, 250, 180);
+    opacity: 0.9;
+    border-radius: 10px;    
 }
+
+.message.received .hover {
+    background-color: white;
+}
+
 .message:hover .hover {
     display: block;
     font-size: 0.8rem;
+}
+
+.message:hover h5 {
+    filter: blur(0.5px);
 }
 
 .current-chat .text {
