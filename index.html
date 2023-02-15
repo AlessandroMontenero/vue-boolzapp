@@ -24,14 +24,20 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./style/style.css" />
+    <link rel="stylesheet" href="./style/media.css" />
 
     <title>vue-bolzapp</title>
   </head>
   <body>
     <main>
+      <!-- Green Bar -->
       <div class="main-green-bar"></div>
+      <!-- Boolzapp -->
       <div class="bolzapp-container" id="app">
-        <!-- Chats List -->
+        <!-- 
+          Chats List Section 
+        -->
+
         <div class="chats-list" v-show="chatsListDisplay">
           <!-- List Header -->
           <div class="chat-header chats-list-header">
@@ -74,7 +80,6 @@
               type="text"
               class="form-control shadow-none"
               placeholder="Cerca o inizia una nuova chat"
-              aria-label="Example text with button addon"
               aria-describedby="button-addon1"
               v-model="search"
               @keyup="searchOnString()"
@@ -109,17 +114,23 @@
             </div>
           </div>
         </div>
+
+        <!-- 
+          Add Contact Section 
+        -->
+
         <div class="add-contact" v-show="addContactDisplay">
           <div class="add-contact-container">
+            <!-- Name field -->
             <h5 class="mx-2">Nome:</h5>
             <input
               class="form-control"
               type="text"
               placeholder="Scrivi il nome"
               v-model="sampleName"
-              aria-label="default input example"
               @keyup.enter="addUser()"
             />
+            <!-- User Imgs -->
             <h5 class="m-2 mb-0">Immagine:</h5>
             <div class="userImgSlider">
               <div v-for="(imageUrl, index) in sampleImages">
@@ -133,9 +144,11 @@
               </div>
               <div class="addImg">+</div>
             </div>
+            <!-- Add Contact Button -->
             <button type="button" class="btn btn-primary" @click="addUser()">
               Aggiungi Contatto
             </button>
+            <!-- Esc Button -->
             <div
               class="btn esc"
               @click="addContactDisplay = false, chatsListDisplay = true"
@@ -144,6 +157,11 @@
             </div>
           </div>
         </div>
+
+        <!-- 
+          Home Section 
+        -->
+
         <div class="home" v-show="homeDisplay">
           <img src="./img/Screenshot 2023-02-15 at 16.14.44.png" alt="" />
           <div class="boolzappDescr">
@@ -156,12 +174,19 @@
             </h4>
           </div>
         </div>
+
+        <!-- 
+          Active Chat Section 
+        -->
+
         <div class="active-chat" v-show="activeChatDisplay">
+          <!-- Active Chat Header -->
           <div class="chat-header active-chat-header">
             <i
               class="fa-solid fa-chevron-left"
               @click="activeChatBackButton()"
             ></i>
+            <!-- Active Chat User -->
             <img
               :src="'./img/avatar' + (contacts[activeIndex].avatar) + '.jpg'"
               alt=""
@@ -175,8 +200,9 @@
                   {{formatTime(lastMessage(activeIndex).date)}}
                 </h5>
               </div>
-              <i class="fa-solid fa-magnifying-glass"></i>
 
+              <!-- Active Chat Buttons -->
+              <i class="fa-solid fa-magnifying-glass"></i>
               <a
                 class="nav-link dropdown"
                 href="#"
@@ -195,18 +221,23 @@
               </ul>
             </div>
           </div>
+          <!-- Active Chat Container -->
           <div class="current-chat">
+            <!-- Messages -->
             <div v-if="contacts[activeIndex].messages != ''">
               <div
                 class="message"
                 :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}, { noMessages: (message.status == 'noMessages')}"
                 v-for="(message, index) in contacts[activeIndex].messages"
               >
+                <!-- Message Text -->
                 <div class="text">
                   <h4>{{message.text}}</h4>
                 </div>
+                <!-- Message Hour -->
                 <div class="hour" v-if="message.status != 'noMessages'">
                   <h5>{{formatTime(message.date)}}</h5>
+                  <!-- Message Dropdown -->
                   <div class="hover">
                     <a
                       class="nav-link dropdown"
@@ -235,6 +266,7 @@
               </div>
             </div>
           </div>
+          <!-- Active Chat New Message Input Field -->
           <div class="current-chat-footer">
             <i class="fa-regular fa-face-smile"></i>
             <input
@@ -242,7 +274,6 @@
               @keyup.enter="submitMessage(activeIndex)"
               class="form-control shadow-none"
               placeholder="Scrivi un messaggio"
-              aria-label="Example text with two button addons"
               v-model="newText"
             />
             <i class="fa-solid fa-microphone" v-if="newText == ''"></i>
