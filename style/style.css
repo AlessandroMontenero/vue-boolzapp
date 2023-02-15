@@ -149,6 +149,7 @@ i {
     align-items: center;
     justify-content: center;
     background-color: rgb(240, 242, 245);
+    border-radius: 0 10px 10px 0 ;
 }
 
 .add-contact-container {
@@ -194,6 +195,15 @@ i {
 }
 .add-contact-container .btn:hover {
     filter: brightness(110%);
+}
+
+.add-contact-container .btn.esc {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    border-radius: 50%;
 }
 
 
