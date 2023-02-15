@@ -12,7 +12,13 @@ let DateTime = luxon.DateTime;
         search: '',
         chatsListDisplay: true,
         activeChatDisplay: true,
-        homeDisplay: true,
+        homeDisplay: false,
+        addContactDisplay: false,
+        sampleIndex: 0,
+        sampleName: '',
+        sampleImages: [
+          '_1','_2','_3','_4','_5','_6','_7','_8',
+        ],
         contacts: [
           {
           name: 'Michele',
@@ -174,6 +180,20 @@ let DateTime = luxon.DateTime;
           status: 'received'
           }
           ],
+          },
+          {
+          name: 'Alessandro',
+          avatar: '_5',
+          visible: true,
+          messages: [
+            {
+              
+              date: '',
+              text: 'Inizia a chattare',
+              status: 'noMessages'
+              
+          }
+          ],
           }
           ]
       }
@@ -221,6 +241,42 @@ let DateTime = luxon.DateTime;
         
         return time
       },
+      addUserButton() {
+        this.addContactDisplay = true
+        this.homeDisplay = false
+        this.activeChatDisplay = false
+        if (window.innerWidth <= 768){
+          this.homeDisplay = false
+          this.activeChatDisplay = false
+          this.chatsListDisplay = false
+        }
+      },
+      addUser() {
+        let imgURL = this.sampleImages[this.sampleIndex]
+        let userName = this.sampleName 
+        if (!this.sampleName.replace(/\s/g, '').length == false) {
+          this.contacts.push(
+            {
+              name: userName,
+              avatar: imgURL,
+              visible: true,
+              messages: [
+                {
+                  
+                  date: '',
+                  text: 'Inizia a chattare',
+                  status: 'noMessages'
+                  
+              }
+              ],
+              })
+            let arrLenght = this.contacts.length
+            this.addContactDisplay = false
+            this.activeChatDisplay = true
+            this.activeIndex = arrLenght - 1
+        }
+
+      },
       searchOnString(){
         for (index in this.contacts){
             let typed = this.search.toUpperCase()
@@ -250,25 +306,50 @@ let DateTime = luxon.DateTime;
           let removedMessage= this.contacts[this.activeIndex].messages.splice(index, 1)[index]
         }
       },
+      deleteChat(){
+        this.contacts[this.activeIndex].messages = [
+          {
+            
+              date: '',
+              text: 'Inizia a chattare',
+              status: 'noMessages'
+              
+          }
+        ]
+        this.activeIndex++
+      },
       onResize() {
         if (this.homeDisplay == true) {
           this.activeChatDisplay = false
         }
         if (window.innerWidth <= 768 && (this.activeChatDisplay == true || this.homeDisplay == true)) {
-          this.homeDisplay = false
-          this.activeChatDisplay = true
-          this.chatsListDisplay = false
-        } else if (window.innerWidth > 768) {
+          if (this.homeDisplay == true) {
+            this.homeDisplay = false
+            this.activeChatDisplay = false
+            this.chatsListDisplay = true
+          }
+          else {
+            this.homeDisplay = false
+            this.activeChatDisplay = true
+            this.chatsListDisplay = false
+          }
           if (this.homeDisplay == false) {
             this.chatsListDisplay = true
             this.activeChatDisplay = true
           }
+          if (this.addContactDisplay == true) {
+            this.chatsListDisplay = true
+            this.homeDisplay = false
+            this.activeChatDisplay = false
+          }
           this.chatsListDisplay = true
         }
+        
       },
       contactOnClick() {
         this.activeChatDisplay = true
         this.homeDisplay = false
+        this.addContactDisplay = false
         if (window.innerWidth <= 768) {
           this.chatsListDisplay = false
       }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
 
     <!-- Bootstrap -->
     <link
@@ -41,7 +40,22 @@
               <h4 class="me-auto">Sofia</h4>
               <i class="fa-solid fa-circle-notch"></i>
               <i class="fa-solid fa-message"></i>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <a
+                class="nav-link dropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#" @click="addUserButton()"
+                    >Aggiungi Contatto</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
           <!-- Notification banner -->
@@ -70,12 +84,13 @@
           </div>
           <!-- Chats -->
           <div class="chats">
+            <div class="startChat">Inizia una nuova chat</div>
             <div
               class="chat"
               v-for="(contact, index) in contacts"
               @click="activeIndex = index; contactOnClick()"
               v-show="contact.visible"
-              :class="{ active: (index == activeIndex) }"
+              :class="{ active: (index == activeIndex), 'align-down': (lastMessage(index).date == '')}"
             >
               <img
                 :src="'./img/avatar' + (contact.avatar) + '.jpg'"
@@ -85,26 +100,64 @@
               <div class="header-description">
                 <div class="me-auto">
                   <h4>{{contact.name}}</h4>
-                  <h5>{{lastMessage(index).text}}</h5>
+                  <h5 v-if="lastMessage(index).date != ''">
+                    {{lastMessage(index).text}}
+                  </h5>
                 </div>
-                <div class="chat-time">
+                <div class="chat-time" v-if="lastMessage(index).date != ''">
                   <h5>{{formatTime(lastMessage(index).date)}}</h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="add-contact" v-show="addContactDisplay">
+          <div class="add-contact-container">
+            <h5 class="mx-2">Nome:</h5>
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Scrivi il nome"
+              v-model="sampleName"
+              aria-label="default input example"
+              @keyup.enter="addUser()"
+            />
+            <h5 class="m-2 mb-0">Immagine:</h5>
+            <div class="userImgSlider">
+              <div v-for="(imageUrl, index) in sampleImages">
+                <img
+                  :src="'./img/avatar' + imageUrl + '.jpg'"
+                  alt=""
+                  class="sampleImage"
+                  :class="{ active: (index == sampleIndex)}"
+                  @click="sampleIndex = index"
+                />
+              </div>
+              <div class="addImg">+</div>
+            </div>
+            <button type="button" class="btn btn-primary" @click="addUser()">
+              Aggiungi Contatto
+            </button>
+          </div>
+        </div>
         <div class="home" v-show="homeDisplay">
-          <img src="./img/Screenshot 2023-02-15 at 16.14.44.png" alt="">
+          <img src="./img/Screenshot 2023-02-15 at 16.14.44.png" alt="" />
           <div class="boolzappDescr">
             <h2>Boolzapp Desktop</h2>
-            <h4>Invia e ricevi messaggi senza tenere il telefono connesso a internet. <br>
-            Usa Boolzapp su un massimo di 4 dispotivi collegati e 1 telefono contemporaneamente.</h4>
+            <h4>
+              Invia e ricevi messaggi senza tenere il telefono connesso a
+              internet. <br />
+              Usa Boolzapp su un massimo di 4 dispotivi collegati e 1 telefono
+              contemporaneamente.
+            </h4>
           </div>
         </div>
         <div class="active-chat" v-show="activeChatDisplay">
           <div class="chat-header active-chat-header">
-            <i class="fa-solid fa-chevron-left" @click="activeChatBackButton()"></i>
+            <i
+              class="fa-solid fa-chevron-left"
+              @click="activeChatBackButton()"
+            ></i>
             <img
               :src="'./img/avatar' + (contacts[activeIndex].avatar) + '.jpg'"
               alt=""
@@ -113,29 +166,45 @@
             <div class="header-description">
               <div class="me-auto">
                 <h4>{{contacts[activeIndex].name}}</h4>
-                <h5>
+                <h5 v-if="lastMessage(activeIndex).date != ''">
                   Ultimo accesso oggi alle
                   {{formatTime(lastMessage(activeIndex).date)}}
                 </h5>
               </div>
               <i class="fa-solid fa-magnifying-glass"></i>
               <i class="fa-solid fa-paperclip"></i>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+
+              <a
+                class="nav-link dropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#" @click="deleteChat()"
+                    >Elimina chat</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
           <div class="current-chat">
             <div v-if="contacts[activeIndex].messages != ''">
-            <div
-            class="message"
-            :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}, { noMessages: (message.status == 'noMessages')}"
-            v-for="(message, index) in contacts[activeIndex].messages"
-            >
-              <div class="text">
-                <h4>{{message.text}}</h4>
-              </div>
-              <div class="hour" v-if="message.status != 'noMessages'">
-                <h5>{{formatTime(message.date)}}</h5>
-                <div class="hover" >
+              <div
+                class="message"
+                :class="{ sent: (message.status == 'sent')}, { received: (message.status == 'received')}, { noMessages: (message.status == 'noMessages')}"
+                v-for="(message, index) in contacts[activeIndex].messages"
+              >
+                <div class="text">
+                  <h4>{{message.text}}</h4>
+                </div>
+                <div class="hour" v-if="message.status != 'noMessages'">
+                  <h5>{{formatTime(message.date)}}</h5>
+                  <div class="hover">
                     <a
                       class="nav-link dropdown"
                       href="#"
@@ -146,17 +215,22 @@
                       <i class="fa-solid fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Message info</a></li>
                       <li>
-                        <a class="dropdown-item" href="#"
-                        @click="deleteThisMessage(index)">Delete message</a>
+                        <a class="dropdown-item" href="#">Message info</a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          @click="deleteThisMessage(index)"
+                          >Delete message</a
+                        >
                       </li>
                     </ul>
-                  </li>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
           <div class="current-chat-footer">
             <i class="fa-regular fa-face-smile"></i>
@@ -169,12 +243,16 @@
               v-model="newText"
             />
             <i class="fa-solid fa-microphone" v-if="newText == ''"></i>
-            <i class="fa-solid fa-paper-plane" v-else @click="submitMessage(activeIndex)"></i>
+            <i
+              class="fa-solid fa-paper-plane"
+              v-else
+              @click="submitMessage(activeIndex)"
+            ></i>
           </div>
         </div>
       </div>
     </main>
-    
+
     <!-- Luxon -->
     <script src="
       https://cdn.jsdelivr.net/npm/luxon@3.2.1/build/global/luxon.min.js
