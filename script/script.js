@@ -283,9 +283,9 @@ let DateTime = luxon.DateTime;
         let timeBeforeReply = timeBeforeRead + (Math.floor(Math.random() * 2) * 1000) + 1000
         setTimeout(function(){
           boolzapp.isOnline = true
+          thisContact.messages[i - 1].readed = true
         },timeBeforeOnline)
         setTimeout(function(){
-          thisContact.messages[i - 1].readed = true
           boolzapp.isTypingFunct()
         }, timeBeforeRead)
         setTimeout(function(){
