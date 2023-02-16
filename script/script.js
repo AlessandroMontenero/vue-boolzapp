@@ -268,12 +268,12 @@ let DateTime = luxon.DateTime;
       sendReply(index) {
         let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
         let repliesText = [
-          "Qual'è la più grande bugia dell’universo ?. 'Ho letto e accetto i termini e le condizioni'",
+          "Qual'è la più grande bugia dell'universo ?. 'Ho letto e accetto i termini e le condizioni'",
           "Ci sono 10 tipi di persone al mondo; quelli che capiscono il codice binario, e quelli che non lo capiscono",
           "Windows vista può realmente lavorare in multitasking, riesce ad avviarsi e a crashare simultaneamente.",
-          "Quando un computer prende un virus, come viene definito? Malato terminale",
+          "Quando un computer prende un virus, come viene definito? Malato terminale.",
           " Cosa fa un uccellino di un milligrammo su un ramo? Micro-cip… micro-cip…",
-          "Errare e' umano, ma perincasinare veramente le cose ci vuole un computer! (Quinta legge dell'inattendibilita',dalle leggi di Murphy).",
+          "Errare e' umano, ma per incasinare veramente le cose ci vuole un computer! (Quinta legge dell'inattendibilita',dalle leggi di Murphy).",
           "I computer non sono intelligenti. Pensano solo di esserlo!",
           "Quanti programmatori ci vogliono per avvitare una lampadina? Nessuno, e' un problema hardware!",
           "I computer sono inutili. Ti sanno dare solo risposte!"
@@ -439,7 +439,7 @@ let DateTime = luxon.DateTime;
       }
       },
       activeChatBackButton() {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 769) {
           this.activeChatDisplay = false
           this.chatsListDisplay = true
       }

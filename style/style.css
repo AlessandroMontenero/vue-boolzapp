@@ -320,7 +320,7 @@ h5 {
 
     /* Current Chat Message */
     .current-chat .message {
-        max-width: 40%;
+        max-width: 55%;
         width: fit-content;
         background-color: white;
         display: flex;
