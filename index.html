@@ -63,11 +63,17 @@
             </div>
           </div>
           <!-- Notification banner -->
-          <div class="activate-notification">
+          <div class="activate-notification" v-show="notificationBannerDisplay">
             <i class="fa-solid fa-bell-slash"></i>
             <div>
               <h4>Ricevi notifiche di nuovi messagi</h4>
               <h5 class="underlined">Attiva notifiche desktop</h5>
+            </div>
+            <div
+              class="notificationBannerCloseButton"
+              @click="notificationBannerDisplay = false"
+            >
+              x
             </div>
           </div>
           <!-- Searchbar -->
@@ -195,10 +201,14 @@
             <div class="header-description">
               <div class="me-auto">
                 <h4>{{contacts[activeIndex].name}}</h4>
-                <h5 v-if="lastMessage(activeIndex).date != ''">
+                <h5
+                  v-if="(lastMessage(activeIndex).date != '')"
+                  :style="{display: lastLoginDisplay}"
+                >
                   Ultimo accesso oggi alle
                   {{formatTime(lastMessage(activeIndex).date)}}
                 </h5>
+                <h5 :style="{display: isTypingDisplay}">Sta Scrivendo...</h5>
               </div>
 
               <!-- Active Chat Buttons -->

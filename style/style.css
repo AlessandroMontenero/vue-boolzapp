@@ -111,6 +111,7 @@ h5 {
         padding: 3px;
         display: flex;
         align-items: center;
+        position: relative;
     }
     /* Activate Notification icon */
     .activate-notification i{
@@ -120,6 +121,17 @@ h5 {
         background-color: white;
         border-radius: 50%;
         color: rgb(120, 200, 210);
+    }
+    /* Notification Banner Close Button */
+    .notificationBannerCloseButton{
+        display: none;
+    }    
+    .activate-notification:hover .notificationBannerCloseButton{
+        display: block;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
     }
     
     /* Chat List search */

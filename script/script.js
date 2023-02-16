@@ -4,7 +4,7 @@ const { createApp } = Vue
 let DateTime = luxon.DateTime;
 
 
-  createApp({
+  let boolzapp = createApp({
     data() {
       return {
         activeIndex: 0,
@@ -14,6 +14,9 @@ let DateTime = luxon.DateTime;
         activeChatDisplay: true,
         homeDisplay: false,
         addContactDisplay: false,
+        lastLoginDisplay: 'block',
+        isTypingDisplay: 'none',
+        notificationBannerDisplay: true,
         sampleIndex: 0,
         sampleName: '',
         sampleImages: [
@@ -198,7 +201,17 @@ let DateTime = luxon.DateTime;
           ]
       }
     },
+    watch: {
+    },
     methods: {
+      isTypingFunct(){
+        this.lastLoginDisplay = 'none'
+        this.isTypingDisplay = 'block'
+      },
+      notTypingFunct(){
+        this.isTypingDisplay = 'none'
+        this.lastLoginDisplay = 'block'
+      },
       lastMessage(index) {
         let i = 0
         for (message in this.contacts[index].messages){
@@ -207,6 +220,7 @@ let DateTime = luxon.DateTime;
         return this.contacts[index].messages[i - 1]
       },
       submitMessage(index){
+        this.isTypingFunct()
         if (!this.newText.replace(/\s/g, '').length == false){
           let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
           let thisContact = this.contacts[index]
@@ -219,10 +233,10 @@ let DateTime = luxon.DateTime;
           }
           else{
             let newMessage = {
-            date: now,
-            text: this.newText,
-            status: 'sent'
-          }
+              date: now,
+              text: this.newText,
+              status: 'sent'
+            }
             thisContact.messages.push(newMessage)
           }
           this.newText = ''
@@ -233,8 +247,9 @@ let DateTime = luxon.DateTime;
           }
           setTimeout(function(){
             thisContact.messages.push(reply)
+            boolzapp.notTypingFunct()
           }, 1000)
-      }
+        }
       },
       formatTime(dateTime){
         time = DateTime.fromFormat(dateTime, "dd/MM/yyyy HH:mm:ss").toLocaleString(DateTime.TIME_SIMPLE);
