@@ -338,8 +338,23 @@ h5 {
 
     .message .hour {
         align-self: flex-end;
+        display: flex;
+        align-items: center;
     }
     
+    .message .hour h5,
+    .message .hour .fa-check-double {
+        font-size: 0.7rem;
+        margin: 3px;
+        z-index: 1;
+    } 
+
+    .message .hour .fa-check-double {
+        font-size: 0.6rem;
+    }
+    .fa-check-double.blue {
+        color: blue;
+    }
     /* Sent Message */
     .message.sent {
         margin-left: auto;

@@ -119,7 +119,9 @@
                   >
                     Sta scrivendo..
                   </h5>
-                  <h5 v-else>{{lastMessage(index).text}}</h5>
+                  <h5 v-else-if="lastMessage(index).date != ''">
+                    {{lastMessage(index).text}}
+                  </h5>
                 </div>
                 <div class="chat-time" v-if="lastMessage(index).date != ''">
                   <h5>{{formatTime(lastMessage(index).date)}}</h5>
@@ -255,6 +257,11 @@
                 <!-- Message Hour -->
                 <div class="hour" v-if="message.status != 'noMessages'">
                   <h5>{{formatTime(message.date)}}</h5>
+                  <i
+                    v-if="message.status == 'sent'"
+                    class="fa-solid fa-check-double"
+                    :class="{blue : (message.readed == true)}"
+                  ></i>
                   <!-- Message Dropdown -->
                   <div class="hover">
                     <a

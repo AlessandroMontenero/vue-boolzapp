@@ -31,17 +31,20 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Hai portato a spasso il cane?',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'Ricordati di stendere i panni',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 16:15:22',
           text: 'Tutto fatto!',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -53,17 +56,20 @@ let DateTime = luxon.DateTime;
           {
           date: '20/03/2020 16:30:00',
           text: 'Ciao come stai?',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '20/03/2020 16:30:55',
           text: 'Bene grazie! Stasera ci vediamo?',
-          status: 'received'
+          status: 'received',
+          readed: true
           },
           {
           date: '20/03/2020 16:35:00',
           text: 'Mi piacerebbe ma devo andare a fare la spesa.',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           }
           ],
           },
@@ -75,17 +81,20 @@ let DateTime = luxon.DateTime;
           {
           date: '28/03/2020 10:10:40',
           text: 'La Marianna va in campagna',
-          status: 'received'
+          status: 'received',
+          readed: true
           },
           {
           date: '28/03/2020 10:20:10',
           text: 'Sicuro di non aver sbagliato chat?',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '28/03/2020 16:15:22',
           text: 'Ah scusa!',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -97,12 +106,14 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Lo sai che ha aperto una nuova pizzeria?',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'Si, ma preferirei andare al cinema',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -114,12 +125,14 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Ricordati di chiamare la nonna',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'Va bene, stasera la sento',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -131,17 +144,20 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Ciao Claudia, hai novità?',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'Non ancora',
-          status: 'received'
+          status: 'received',
+          readed: true
           },
           {
           date: '10/01/2020 15:51:00',
           text: 'Nessuna nuova, buona nuova',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           }
           ],
           },
@@ -153,12 +169,14 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Fai gli auguri a Martina che è il suo compleanno!',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'Grazie per avermelo ricordato, le scrivo subito!',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -170,17 +188,20 @@ let DateTime = luxon.DateTime;
           {
           date: '10/01/2020 15:30:55',
           text: 'Ciao, andiamo a mangiare la pizza stasera?',
-          status: 'received'
+          status: 'received',
+          readed: true
           },
           {
           date: '10/01/2020 15:50:00',
           text: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
-          status: 'sent'
+          status: 'sent',
+          readed: true
           },
           {
           date: '10/01/2020 15:51:00',
           text: 'OK!!',
-          status: 'received'
+          status: 'received',
+          readed: true
           }
           ],
           },
@@ -193,15 +214,14 @@ let DateTime = luxon.DateTime;
               
               date: '',
               text: 'Inizia a chattare',
-              status: 'noMessages'
+              status: 'noMessages',
+              readed: true
               
           }
           ],
           }
           ]
       }
-    },
-    watch: {
     },
     methods: {
       isTypingFunct(){
@@ -220,7 +240,6 @@ let DateTime = luxon.DateTime;
         return this.contacts[index].messages[i - 1]
       },
       submitMessage(index){
-        this.isTypingFunct()
         if (!this.newText.replace(/\s/g, '').length == false){
           let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
           let thisContact = this.contacts[index]
@@ -228,28 +247,47 @@ let DateTime = luxon.DateTime;
             this.contacts[this.activeIndex].messages = [{
               date: now,
               text: this.newText,
-              status: 'sent'
+              status: 'sent',
+              readed: false
             }]
           }
           else{
             let newMessage = {
               date: now,
               text: this.newText,
-              status: 'sent'
+              status: 'sent',
+              readed: false
             }
             thisContact.messages.push(newMessage)
+            this.sendReply(index)
           }
           this.newText = ''
-          let reply = {
-            date: now,
-            text: 'ok',
-            status: 'received'
-          }
-          setTimeout(function(){
-            thisContact.messages.push(reply)
-            boolzapp.notTypingFunct()
-          }, 1000)
         }
+      },
+      sendReply(index) {
+        let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
+        let reply = {
+          date: now,
+          text: 'ok',
+          status: 'received',
+          readed: false
+        }
+        let thisContact = this.contacts[index]
+        let i = 0
+        for (msgNumber in thisContact.messages) {
+          i++
+        }
+        let timeBeforeRead = Math.floor(Math.random() * 4) * 1000
+        let timeBeforeReply = timeBeforeRead + (Math.floor(Math.random() * 4) * 1000)
+        setTimeout(function(){
+          thisContact.messages[i - 1].readed = true
+          boolzapp.isTypingFunct()
+        }, timeBeforeRead)
+        setTimeout(function(){
+          thisContact.messages.push(reply)
+          boolzapp.notTypingFunct()
+        }, timeBeforeReply)
+
       },
       formatTime(dateTime){
         time = DateTime.fromFormat(dateTime, "dd/MM/yyyy HH:mm:ss").toLocaleString(DateTime.TIME_SIMPLE);
@@ -287,7 +325,8 @@ let DateTime = luxon.DateTime;
                   
                   date: '',
                   text: 'Inizia a chattare',
-                  status: 'noMessages'
+                  status: 'noMessages',
+                  readed: true
                   
               }
               ],
@@ -320,7 +359,8 @@ let DateTime = luxon.DateTime;
               
                 date: '',
                 text: 'Inizia a chattare',
-                status: 'noMessages'
+                status: 'noMessages',
+                readed: true
                 
             }
           ]
@@ -335,7 +375,8 @@ let DateTime = luxon.DateTime;
             
               date: '',
               text: 'Inizia a chattare',
-              status: 'noMessages'
+              status: 'noMessages',
+              readed: true
               
           }
         ]
