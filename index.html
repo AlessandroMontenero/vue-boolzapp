@@ -299,7 +299,20 @@
           </div>
           <!-- Active Chat New Message Input Field -->
           <div class="current-chat-footer">
-            <i class="fa-regular fa-face-smile"></i>
+            <i
+              class="fa-regular fa-face-smile"
+              @click="emojiContainerDisplay = 'flex'"
+            ></i>
+            <div class="emojiPicker" :style="{display: emojiContainerDisplay}">
+              <div class="emojiContainer">
+                <div
+                  v-for="emoji in allEmojis"
+                  @click="newText += emoji, emojiContainerDisplay = 'none'"
+                >
+                  {{emoji}}
+                </div>
+              </div>
+            </div>
             <input
               type="text"
               @keyup.enter="submitMessage(activeIndex)"
