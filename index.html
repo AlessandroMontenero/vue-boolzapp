@@ -212,11 +212,16 @@
               <div class="me-auto">
                 <h4>{{contacts[activeIndex].name}}</h4>
                 <h5
-                  v-if="(lastMessage(activeIndex).date != '')"
+                  v-if="(lastMessage(activeIndex).date != '') && (isOnline != true)"
                   :style="{display: lastLoginDisplay}"
                 >
                   Ultimo accesso oggi alle
                   {{formatTime(lastMessage(activeIndex).date)}}
+                </h5>
+                <h5
+                  v-else-if="(isOnline == true) && (isTypingDisplay == 'none')"
+                >
+                  Online
                 </h5>
                 <h5 :style="{display: isTypingDisplay}">Sta scrivendo...</h5>
               </div>

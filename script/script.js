@@ -17,6 +17,7 @@ let DateTime = luxon.DateTime;
         lastLoginDisplay: 'block',
         isTypingDisplay: 'none',
         notificationBannerDisplay: true,
+        isOnline: false,
         sampleIndex: 0,
         sampleName: '',
         sampleImages: [
@@ -277,8 +278,12 @@ let DateTime = luxon.DateTime;
         for (msgNumber in thisContact.messages) {
           i++
         }
-        let timeBeforeRead = Math.floor(Math.random() * 4) * 1000
-        let timeBeforeReply = timeBeforeRead + (Math.floor(Math.random() * 4) * 1000)
+        let timeBeforeOnline = (Math.floor(Math.random() * 2) * 1000) + 1000
+        let timeBeforeRead = Math.floor(Math.random() * 2) * 1000 + timeBeforeOnline + 1000
+        let timeBeforeReply = timeBeforeRead + (Math.floor(Math.random() * 2) * 1000) + 1000
+        setTimeout(function(){
+          boolzapp.isOnline = true
+        },timeBeforeOnline)
         setTimeout(function(){
           thisContact.messages[i - 1].readed = true
           boolzapp.isTypingFunct()
@@ -286,6 +291,7 @@ let DateTime = luxon.DateTime;
         setTimeout(function(){
           thisContact.messages.push(reply)
           boolzapp.notTypingFunct()
+          boolzapp.isOnline = false
         }, timeBeforeReply)
 
       },
