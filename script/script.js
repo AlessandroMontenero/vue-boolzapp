@@ -267,9 +267,22 @@ let DateTime = luxon.DateTime;
       },
       sendReply(index) {
         let now = DateTime.now().toFormat("dd/MM/yyyy HH:mm:ss")
+        let repliesText = [
+          "Qual'è la più grande bugia dell’universo ?. 'Ho letto e accetto i termini e le condizioni'",
+          "Ci sono 10 tipi di persone al mondo; quelli che capiscono il codice binario, e quelli che non lo capiscono",
+          "Windows vista può realmente lavorare in multitasking, riesce ad avviarsi e a crashare simultaneamente.",
+          "Quando un computer prende un virus, come viene definito? Malato terminale",
+          " Cosa fa un uccellino di un milligrammo su un ramo? Micro-cip… micro-cip…",
+          "Errare e' umano, ma perincasinare veramente le cose ci vuole un computer! (Quinta legge dell'inattendibilita',dalle leggi di Murphy).",
+          "I computer non sono intelligenti. Pensano solo di esserlo!",
+          "Quanti programmatori ci vogliono per avvitare una lampadina? Nessuno, e' un problema hardware!",
+          "I computer sono inutili. Ti sanno dare solo risposte!"
+        ]
+        let repliesNumber = repliesText.length
+        let chosenReply = Math.floor(Math.random() * repliesNumber)
         let reply = {
           date: now,
-          text: 'ok',
+          text: repliesText[chosenReply],
           status: 'received',
           readed: false
         }

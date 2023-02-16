@@ -110,6 +110,7 @@
                 <div class="me-auto">
                   <h4>{{contact.name}}</h4>
                   <h5
+                    class="chat-message"
                     v-if="lastMessage(index).date != '' && lastLoginDisplay != 'none'"
                   >
                     {{lastMessage(index).text}}
